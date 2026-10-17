@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# dbt
+target/
+dbt_packages/
+logs/
+dbt_project.yml.bak
+
+# Secrets — never commit
+.env
+*.pem
+*.key
+profiles.yml
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/

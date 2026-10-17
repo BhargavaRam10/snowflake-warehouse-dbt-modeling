@@ -1,0 +1,15 @@
+# Copy to profiles.yml (kept OUTSIDE the repo) and fill in. NEVER commit it.
+# dbt reads ~/.dbt/profiles.yml by default.
+ops_warehouse:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: your_account
+      user: your_user
+      password: your_password
+      role: TRANSFORMER
+      database: OPS_DB
+      warehouse: TRANSFORM_WH
+      schema: DBT_SAI
+      threads: 4
