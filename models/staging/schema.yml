@@ -1,0 +1,49 @@
+version: 2
+
+sources:
+  - name: ops
+    description: Raw bronze tables landed by the ingestion layer.
+    tables:
+      - name: pickups_raw
+        description: Raw pickup transactions, one JSON/CSV row per source record.
+      - name: routes_raw
+        description: Raw route master from the file drop.
+      - name: service_events_raw
+        description: Raw service events ingested from the REST API.
+
+models:
+  - name: stg_pickups
+    description: Cleaned pickup transactions; one row per pickup_id.
+    columns:
+      - name: pickup_id
+        description: Natural key of the pickup transaction.
+        tests:
+          - unique
+          - not_null
+      - name: route_id
+        description: Route that performed the pickup.
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_routes')
+              field: route_id
+      - name: tonnage
+        description: Collected tonnage; never negative.
+        tests:
+          - not_null
+
+  - name: stg_routes
+    description: Route master, one row per route_id.
+    columns:
+      - name: route_id
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_service_events
+    description: Service events, one row per event_id.
+    columns:
+      - name: event_id
+        tests:
+          - unique
+          - not_null
